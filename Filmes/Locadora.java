@@ -2,6 +2,7 @@ package Filmes;
 
 import java.util.ArrayList;    // Para usar o ArrayList
 
+import Pessoas.Administrador;
 import Pessoas.Pessoa;
 
 import java.io.BufferedReader; // Para ler arquivos linha por linha
@@ -117,26 +118,35 @@ public class Locadora {
 		}
 	}
 	
-	public boolean adicionarFilme(Filme novo) { //Adiciona um filme ao catálogo
-		this.catalogoFilmes.add(novo);
-		return true;
+	public boolean adicionarFilme(Filme novo, Pessoa usuario) { //Adiciona um filme ao catálogo
+		if (usuario instanceof Administrador) {					//Verifica se o usuário é um administrador
+			this.catalogoFilmes.add(novo);
+			return true;
+		} else {
+			return false;										//Retorna false se um cliente tentar adicionar um filme
+		}
+		
 	}
 	
-	public boolean removerFilme(int id) { //Remove um filme do catálogo
-		if (this.catalogoFilmes.size() == 0) {
-			return false;
-		} else {
-			int i=0;
-			while (i < this.catalogoFilmes.size() && this.catalogoFilmes.get(i).getId() != id) {
-				i++;
-			}
-			
-			if (i == this.catalogoFilmes.size()) {
-				return false;
+	public boolean removerFilme(int id, Pessoa usuario) { //Remove um filme do catálogo
+		if (usuario instanceof Administrador) {
+			if (this.catalogoFilmes.size() == 0) {
+				return false;							//Retorna false se não houver filmes para remover
 			} else {
-				this.catalogoFilmes.remove(i);
-				return true;
+				int i=0;
+				while (i < this.catalogoFilmes.size() && this.catalogoFilmes.get(i).getId() != id) {
+					i++;
+				}
+				
+				if (i == this.catalogoFilmes.size()) {
+					return false;						//Retorna false se o filme não for encontrado
+				} else {
+					this.catalogoFilmes.remove(i);
+					return true;						//Remove o filme e retorna true para avisar o usuário posteriormente
+				}
 			}
+		} else {
+			return false;								//Retorna false se o usuário não for um ADM
 		}
 	}
 
