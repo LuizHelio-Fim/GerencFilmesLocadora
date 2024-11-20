@@ -1,6 +1,6 @@
 package Filmes;
 
-import java.util.ArrayList;    // Para usar o ArrayList
+import java.util.ArrayList;
 
 import Pessoas.Administrador;
 import Pessoas.Pessoa;
@@ -161,6 +161,11 @@ public class Locadora {
 			}
 		}
 		return -1;						//se não encontra volta -1 para posteriormente mostrar que não foi encontrado
+	}
+
+	public Filme getFilme() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
