@@ -8,8 +8,8 @@ public class Cliente extends Pessoa {
     private ArrayList<Locacao> historicoLocacoes = new ArrayList<>();
 
     // Construtores
-    public Cliente(int id, String nome, String email, String senha, String endereco) {
-        super(id, nome, email, senha, endereco);
+    public Cliente(int id,String nome, String email, String senha, String endereco, boolean isAdmin) {
+        super(id, nome, email, senha, endereco, isAdmin);
     }
 
     public Cliente() {
