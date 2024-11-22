@@ -2,9 +2,8 @@ package Main;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import Filmes.Locadora;
-import Pessoas.Pessoa;
-import Filmes.Filme;
+import Pessoas.*;
+import Filmes.*;
 
 public class ProgramaPrincipal {
 
@@ -12,6 +11,7 @@ public class ProgramaPrincipal {
 	public static SistemaLogin sistema = new SistemaLogin();
 	public static char opCliente, opAdm, opSistema;
 	public static Pessoa usuarioLogado = null;
+	public static Cliente user;
 	
 	public static ArrayList<Filme> catalogoFilmes = new ArrayList<>();
 	public static ArrayList<Pessoa> usuarios = new ArrayList<>();
@@ -38,6 +38,7 @@ public class ProgramaPrincipal {
 	}
 	
 	
+	//MENUS
 	public static void menuCliente() {
 		System.out.print("------ MENU ------"
 					+ "\n 1. Ver Filmes"
@@ -45,6 +46,7 @@ public class ProgramaPrincipal {
 					+ "\n 3. Buscar Filme"
 					+ "\n 4. Visualizar Histórico de locações"
 					+ "\n 5. Reservar Filme"
+					+ "\n 6. Recomendações"
 					+ "\n 0. Sair "
 					+ "\n > ");
 		opCliente = sc.next().charAt(0);
@@ -54,17 +56,19 @@ public class ProgramaPrincipal {
             System.out.println(locadora.listarFilmes());
              break;
          case '2':
-             System.out.println("Alugar filme...");
              // Lógica de aluguel
              break;
          case '3':
              buscarFilme();
              break;
          case '4':
-             System.out.println("Histórico de locações...");
              // Mostrar histórico do cliente
              break;
          case '5':
+        	 //reservar filme
+        	 break;
+         case '6':
+        	 recomendacao();
         	 break;
          case '0':
              System.out.println("Saindo...");
@@ -88,16 +92,26 @@ public class ProgramaPrincipal {
 		
 		switch (opAdm) {
 			case '1':
+				if (locadora.listarFilmes().equals("")) {
+					System.out.println("Nenhum filme encontrado.\n");
+				} else {
+					System.out.println(locadora.listarFilmes());
+				}
 				break;
 			case '2':
+				adicionarFilme(locadora);
 				break;
 			case '3':
+				removerFilme(locadora);
 				break;
 			case '4':
+				removerCliente(locadora);
 				break;
 			case '5':
+				
 				break;
 			case '6':
+				
 				break;
 			case '0':
 				System.out.println("Saindo...");
@@ -121,6 +135,9 @@ public class ProgramaPrincipal {
 				break;
 			case '2':
 				usuarioLogado = sistema.realizarLogin();
+				if (!usuarioLogado.isAdmin()) {
+					user = (Cliente) usuarioLogado;
+				}
 				break;
 			case '0':
 				System.out.println("Encerrando o Sistema.");
@@ -131,6 +148,70 @@ public class ProgramaPrincipal {
 		}
 	}
 
+	//Opções ADM
+	public static void adicionarFilme(Locadora t) {
+		Filme filme = new Filme();
+		
+		System.out.println("Digite o ID do filme: ");
+		int id = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Digite o nome do filme: ");
+		String nome = sc.nextLine();
+		System.out.println("Digite o genero do filme: ");
+		String genero = sc.nextLine();
+		System.out.println("Digite o diretor do filme: ");
+		String diretor = sc.nextLine();
+		System.out.println("Digite a data de lançamento do filme: (DD/MM/AAAA)");
+		String data = sc.nextLine();
+		System.out.println("O filme está disponivel? (sim/nao)");
+		String disp = sc.nextLine();
+		boolean disponivel = disp.equalsIgnoreCase("sim");
+		
+		filme = new Filme(id, nome, genero, diretor, data, disponivel);
+		if (t.adicionarFilme(filme)){ 	
+			System.out.println("Filme adicionado com sucesso.");
+		} else {
+			System.out.println("Filme inválido.");
+		}
+	}
+	
+	public static void removerFilme(Locadora t) {
+		System.out.println(locadora.listarNomesFilmes());
+		String titulo;
+		sc.nextLine();
+		System.out.println("\nDigite o Titulo do filme: ");
+		titulo = sc.nextLine();
+		
+		if (t.removerFilme(titulo)) {
+			System.out.println("Filme removido com sucesso.");
+		} else {
+			System.out.println("Filme não encontrado.");
+		}
+	}
+	
+	public static void removerCliente(Locadora t) {
+		System.out.println(locadora.listarNomesClientes());
+		String nome;
+		sc.nextLine();
+		System.out.println("\nDigite o nome do cliente: ");
+		nome = sc.nextLine();
+		
+		if (t.removerCliente(nome)) {
+			System.out.println("Cliente removido com sucesso.");
+		} else {
+			System.out.println("Cliente não encontrado.");
+		}
+	}
+	
+	public static void gerenciarReserva() {
+		
+	}
+	
+	public static void calcularMulta() {
+		
+	}
+	
+	//Opções cliente
 	public static void buscarFilme() {
 		System.out.println("Digite o nome do filme: ");
 		sc.nextLine();
@@ -146,5 +227,21 @@ public class ProgramaPrincipal {
 		}
 	}
 	
+	public static void alugarFilme() {
+		System.out.println(locadora.listarFilmes());
+		
+	}
 	
+	public static void histFilmes() {
+		
+	}
+	
+	public static void reservarFilmes() {
+		
+	}
+	
+	public static void recomendacao() {
+		Recomendacao rec = new Recomendacao(user, catalogoFilmes);
+		rec.gerarRecomendacoes();
+	}
 }

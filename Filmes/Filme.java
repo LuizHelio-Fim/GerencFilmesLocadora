@@ -11,15 +11,15 @@ public class Filme {
     private LocalDate dataLancamento;
     private boolean disponivel;
 
-    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     // Construtores
-    public Filme(int id, String nome, String genero, String diretor, LocalDate dataLancamento, boolean disponivel) {
+    public Filme(int id, String nome, String genero, String diretor, String dataLancamento, boolean disponivel) {
         this.id = id;
         this.nome = nome;
         this.genero = genero;
         this.diretor = diretor;
-        this.dataLancamento = dataLancamento;
+        this.dataLancamento = LocalDate.parse(dataLancamento, FORMATTER);
         this.disponivel = disponivel;
     }
 
