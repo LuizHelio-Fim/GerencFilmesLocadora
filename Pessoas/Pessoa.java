@@ -6,14 +6,16 @@ public class Pessoa {
 	private String email;
 	private String senha;
 	private String endereco;
+	private boolean isAdmin;
 	
 	//Construtores
-	public Pessoa(int id, String nome, String email, String senha, String endereco) {
+	public Pessoa(int id, String nome, String email, String senha, String endereco, boolean isAdmin) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
 		this.endereco = endereco;
+		this.isAdmin = isAdmin;
 	}
 	
 	public Pessoa() {
@@ -22,15 +24,12 @@ public class Pessoa {
 		this.email = "";
 		this.senha = "";
 		this.endereco = "";
+		this.isAdmin = false;
 	}
 	
 	//Getters e Setters
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getNome() {
@@ -64,12 +63,19 @@ public class Pessoa {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-
+	
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+	
+	public boolean verificarSenha(String senha) {
+		return this.senha.equals(senha);
+	}
 	
 	@Override
 	public String toString() {
-		return "ID: " + id + "\nNome: " + nome + "\nEmail: "  + email 
-				+ "\nSenha: " + senha + "\nEndereço: " + endereco;
+		return "ID: " + id + "\nNome: " + nome + "\nEmail: "  + email
+				+ "\nEndereço: " + endereco + "\nAdmin: " + (isAdmin ? "Sim" : "Não");
 	}
 	
 	
