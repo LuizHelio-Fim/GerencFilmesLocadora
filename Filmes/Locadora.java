@@ -1,9 +1,7 @@
 package Filmes;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import Pessoas.Administrador;
 import Pessoas.Pessoa;
 
 public class Locadora {
@@ -13,10 +11,9 @@ public class Locadora {
     
     //Construtor
     public Locadora(ArrayList<Filme> catalogoFilmes, ArrayList<Pessoa> usuarios) {
-		this.catalogoFilmes = catalogoFilmes;
-		this.usuarios = usuarios;
+		this.catalogoFilmes = new ArrayList<Filme>();
+		this.usuarios = new ArrayList<Pessoa>();
 	}
-    
     
     //Getters e Setters
 	public ArrayList<Filme> getCatalogoFilmes() {
@@ -59,7 +56,7 @@ public class Locadora {
                         dados[1],
                         dados[2],
                         dados[3],
-                        LocalDate.parse(dados[4], Filme.FORMATTER),
+                        dados[4],
                         Boolean.parseBoolean(dados[5])
                 );
                 this.catalogoFilmes.add(filme);
@@ -163,25 +160,39 @@ public class Locadora {
         }
     }
 
-	public boolean removerFilme(int id, Pessoa usuario) { //Remove um filme do catálogo
-		if (usuario instanceof Administrador) {
-			if (this.catalogoFilmes.size() == 0) {
-				return false;							//Retorna false se não houver filmes para remover
-			} else {
-				int i=0;
-				while (i < this.catalogoFilmes.size() && this.catalogoFilmes.get(i).getId() != id) {
-					i++;
-				}
-				
-				if (i == this.catalogoFilmes.size()) {
-					return false;						//Retorna false se o filme não for encontrado
-				} else {
-					this.catalogoFilmes.remove(i);
-					return true;						//Remove o filme e retorna true para avisar o usuário posteriormente
-				}
-			}
+	public boolean removerFilme(String filme) { 			//Remove um filme do catálogo
+		if (this.catalogoFilmes.size() == 0) {
+			return false;							//Retorna false se não houver filmes para remover
 		} else {
-			return false;								//Retorna false se o usuário não for um ADM
+			int i=0;
+			while (i < this.catalogoFilmes.size() && !this.catalogoFilmes.get(i).getNome().equals(filme)) {
+				i++;
+			}
+			
+			if (i == this.catalogoFilmes.size()) {
+				return false;						//Retorna false se o filme não for encontrado
+			} else {
+				this.catalogoFilmes.remove(i);
+				return true;						//Remove o filme e retorna true para avisar o usuário posteriormente
+			}
+		}
+	}
+	
+	public boolean removerCliente(String nome) {
+		if (this.usuarios.size() == 0) {
+			return false;
+		} else {
+			int i=0;
+			while (i < this.usuarios.size() && !this.usuarios.get(i).getNome().equalsIgnoreCase(nome)) {
+				i++;
+			}
+			
+			if (i == this.usuarios.size()) {
+				return false;
+			} else {
+				this.usuarios.remove(i);
+				return true;
+			}
 		}
 	}
 
@@ -192,8 +203,23 @@ public class Locadora {
 	    }
 	    return lista.toString();
 	}
-
 	
+	public String listarNomesFilmes() {
+		StringBuilder lista = new StringBuilder();
+		for (Filme filme : this.catalogoFilmes) {
+			lista.append(filme.getNome()).append("\n");
+		}
+		return lista.toString();
+	}
+	
+	public String listarNomesClientes() {
+		StringBuilder lista = new StringBuilder();
+		for (Pessoa cliente : this.usuarios) {
+			lista.append(cliente.getNome()).append("\n");
+		}
+		return lista.toString();
+	}
+
 	public Filme buscarFilme(String nome) { 					// Busca um filme pelo nome no catálogo
 	    for (Filme filme : this.catalogoFilmes) {				// Usando um loop for-each para maior clareza
 	        if (filme.getNome().equalsIgnoreCase(nome)) {		// Ignora diferenças entre maiúsculas e minúsculas
