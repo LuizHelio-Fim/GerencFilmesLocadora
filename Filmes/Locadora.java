@@ -3,7 +3,6 @@ package Filmes;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import Pessoas.Administrador;
 import Pessoas.Pessoa;
 
@@ -38,6 +37,19 @@ public class Locadora {
 
 	// Métodos de carregamento
     public boolean carregarDadosFilme() {
+    	File arquivoFilme = new File("filmes.txt");
+    	
+    	if (!arquivoFilme.exists()) {
+    		try {
+    			if (arquivoFilme.createNewFile()) {
+    				System.out.println("Arquivo filmes.txt criado.");
+    			} 
+    		} catch (IOException e) {
+    			System.err.println("Erro ao criar o arquivo filmes.txt: " + e.getMessage());
+    			return false;
+    		}
+    	}
+    	
         try (BufferedReader br = new BufferedReader(new FileReader("filmes.txt"))) {
             String linha;
             while ((linha = br.readLine()) != null) {
@@ -54,12 +66,27 @@ public class Locadora {
             }
             return true;
         } catch (IOException e) {
-            System.err.println("Erro ao carregar os dados dos filmes.");
+            System.err.println("Erro ao carregar os dados dos filmes: " + e.getMessage());
             return false;
+        } catch (Exception e) {
+        	System.err.println("Erro ao processar os dados dos filmes: " + e.getMessage());
+        	return false;
         }
     }
 
     public boolean carregarDadosUsuarios() {
+    	File arquivoUsuarios = new File("usuarios.txt");
+    	
+    	if (!arquivoUsuarios.exists()) {
+    		try {
+    			if (arquivoUsuarios.createNewFile()) {
+    				System.out.println("Arquivo usuarios.txt criado.");
+    			} 
+    		} catch (IOException e) {
+    			System.err.println("Erro ao criar o arquivo usuarios.txt: " + e.getMessage());
+    			return false;
+    		}
+    	}
         try (BufferedReader br = new BufferedReader(new FileReader("usuarios.txt"))) {
             String linha;
             while ((linha = br.readLine()) != null) {
@@ -69,14 +96,18 @@ public class Locadora {
                         dados[1],
                         dados[2],
                         dados[3],
-                        dados[4]
+                        dados[4],
+                        Boolean.parseBoolean(dados[5])
                 );
                 this.usuarios.add(usuario);
             }
             return true;
         } catch (IOException e) {
-            System.err.println("Erro ao carregar os dados dos usuários.");
+            System.err.println("Erro ao carregar os dados dos usuários: " + e.getMessage());
             return false;
+        } catch (Exception e) {
+        	System.err.println("Erro ao processar os dados dos usuarios: " + e.getMessage());
+        	return false;
         }
     }
 
@@ -100,7 +131,7 @@ public class Locadora {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("usuarios.txt"))) {
             for (Pessoa usuario : this.usuarios) {
                 String linha = usuario.getId() + ";" + usuario.getNome() + ";" + usuario.getEmail() + ";" +
-                        usuario.getSenha() + ";" + usuario.getEndereco();
+                        usuario.getSenha() + ";" + usuario.getEndereco() + ";" + usuario.isAdmin();
                 bw.write(linha);
                 bw.newLine();
             }
@@ -163,13 +194,14 @@ public class Locadora {
 	}
 
 	
-	public int buscarFilme(String nome) { // Busca um filme pelo nome no catálogo
-		for (int i=0; i <this.catalogoFilmes.size(); i++) {
-			if (this.catalogoFilmes.get(i).getNome().equals(nome)) {
-				return i;				//retorna o indice do filme para posteriormente mostrar as informações em tela
-			}
-		}
-		return -1;						//se não encontra volta -1 para posteriormente mostrar que não foi encontrado
+	public Filme buscarFilme(String nome) { 					// Busca um filme pelo nome no catálogo
+	    for (Filme filme : this.catalogoFilmes) {				// Usando um loop for-each para maior clareza
+	        if (filme.getNome().equalsIgnoreCase(nome)) {		// Ignora diferenças entre maiúsculas e minúsculas
+	            return filme; 									// Retorna o objeto Filme correspondente
+	        }
+	    }
+	    return null; 											// Retorna null se o filme não for encontrado
 	}
+
 	
 }
