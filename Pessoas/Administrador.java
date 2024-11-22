@@ -6,8 +6,8 @@ import Filmes.Locacao;
 
 public class Administrador extends Pessoa {
 
-	public Administrador(int id, String nome, String email, String senha, String endereco) {
-		super(id, nome, email, senha, endereco);
+	public Administrador(int id , String nome, String email, String senha, String endereco, boolean isAdmin) {
+		super(id , nome, email, senha, endereco, isAdmin);
 	}
 	
 	public boolean removerUsuario(Pessoa user, ArrayList<Pessoa> usuarios) {
