@@ -3,13 +3,15 @@ package Main;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Filmes.Locadora;
-import Pessoas.Pessoa;
+import Pessoas.*;
 
 public class SistemaLogin {
     private ArrayList<Pessoa> usuarios = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
 
-    public void registrarUsuario() {				//Método para Registrar novos usuários, tanto ADM quanto Clientes
+    public void registrarUsuario(Locadora t) {				//Método para Registrar novos usuários, tanto ADM quanto Clientes
+    	Pessoa usuario = new Pessoa();
+    	
     	System.out.println("Digite seu ID:");
     	int id = sc.nextInt();
     	sc.nextLine();
@@ -31,10 +33,12 @@ public class SistemaLogin {
 
         boolean isAdmin = "0000".equals(codigo);			//Código fornecido para criar um admin
 
-        Pessoa novoUsuario = new Pessoa(id, nome, email, senha, endereco, isAdmin);
-        usuarios.add(novoUsuario);
-        Locadora locadora = new Locadora(new ArrayList<>(), usuarios);
-        if (locadora.salvarDadosUsuarios()) {
+        if (isAdmin) {
+        	usuario = new Administrador(id, nome, email, senha, endereco, isAdmin);
+        } else {
+        	usuario = new Cliente(id, nome, email, senha, endereco, isAdmin);
+        }
+        if (t.adicionarCliente(usuario)) {
             System.out.println("Usuário salvo com sucesso!");
         } else {
             System.out.println("Erro ao salvar usuário no arquivo.");
