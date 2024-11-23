@@ -10,17 +10,19 @@ public class Filme {
     private String diretor;
     private LocalDate dataLancamento;
     private boolean disponivel;
+    private double preco;
 
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     // Construtores
-    public Filme(int id, String nome, String genero, String diretor, String dataLancamento, boolean disponivel) {
+    public Filme(int id, String nome, String genero, String diretor, String dataLancamento, boolean disponivel, double preco) {
         this.id = id;
         this.nome = nome;
         this.genero = genero;
         this.diretor = diretor;
         this.dataLancamento = LocalDate.parse(dataLancamento, FORMATTER);
         this.disponivel = disponivel;
+        this.preco = preco;
     }
 
     public Filme() {
@@ -30,6 +32,7 @@ public class Filme {
         this.diretor = "";
         this.dataLancamento = LocalDate.now();
         this.disponivel = true;
+        this.preco = 0.0;
     }
 
     // Getters e Setters
@@ -88,10 +91,18 @@ public class Filme {
     public void setDataLancamento(String dataLancamento) {
         this.dataLancamento = LocalDate.parse(dataLancamento, FORMATTER);
     }
+    
+    public double getPreco() {
+    	return preco;
+    }
+    
+    public void setPreco(double preco) {
+    	this.preco = preco;
+    }
 
     @Override
     public String toString() {
         return "ID: " + id + "\nNome: " + nome + "\nGenero: " + genero + "\nDiretor: " + diretor
-                + "\nLançamento: " + dataLancamento.format(FORMATTER) + "\nDisponivel: " + disponivel + "\n\n";
+                + "\nLançamento: " + dataLancamento.format(FORMATTER) + "\nPreço: " + preco  +"\nDisponivel: " + disponivel + "\n\n";
     }
 }
