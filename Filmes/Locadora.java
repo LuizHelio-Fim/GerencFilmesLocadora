@@ -9,10 +9,13 @@ public class Locadora {
     private ArrayList<Pessoa> usuarios = new ArrayList<>();
 
     
-    //Construtor
+    //Construtores
     public Locadora(ArrayList<Filme> catalogoFilmes, ArrayList<Pessoa> usuarios) {
-		this.catalogoFilmes = new ArrayList<Filme>();
-		this.usuarios = new ArrayList<Pessoa>();
+		this.catalogoFilmes = catalogoFilmes;
+		this.usuarios = usuarios;
+	}
+    
+    public Locadora() {
 	}
     
     //Getters e Setters
@@ -57,7 +60,8 @@ public class Locadora {
                         dados[2],
                         dados[3],
                         dados[4],
-                        Boolean.parseBoolean(dados[5])
+                        Boolean.parseBoolean(dados[5]),
+                        Double.parseDouble(dados[6])
                 );
                 this.catalogoFilmes.add(filme);
             }
@@ -131,6 +135,7 @@ public class Locadora {
                         usuario.getSenha() + ";" + usuario.getEndereco() + ";" + usuario.isAdmin();
                 bw.write(linha);
                 bw.newLine();
+                
             }
             return true;
         } catch (IOException e) {
@@ -156,6 +161,15 @@ public class Locadora {
         	return false;
         } else {
         	this.catalogoFilmes.add(filme);
+        	return true;
+        }
+    }
+    
+    public boolean adicionarCliente(Pessoa cliente) { 
+        if (cliente == null) {
+        	return false;
+        } else {
+        	this.usuarios.add(cliente);
         	return true;
         }
     }
@@ -207,7 +221,7 @@ public class Locadora {
 	public String listarNomesFilmes() {
 		StringBuilder lista = new StringBuilder();
 		for (Filme filme : this.catalogoFilmes) {
-			lista.append(filme.getNome()).append("\n");
+			lista.append("- " + filme.getNome()).append("\n");
 		}
 		return lista.toString();
 	}
