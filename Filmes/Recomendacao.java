@@ -57,7 +57,6 @@ public class Recomendacao {
             recomendacoes.add(filmesDoGenero.get(i));
         }
 
-        
         if (recomendacoes.isEmpty()) {
             System.out.println("Não há recomendações disponíveis.");
         } else {
