@@ -1,5 +1,6 @@
 package Pessoas;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import Filmes.Filme;
 import Filmes.Locacao;
@@ -28,14 +29,16 @@ public class Cliente extends Pessoa {
     // Métodos
     public boolean iniciarLocacao(Filme filme) {									//Cria uma locação associando o filme e o cliente
         if (filme.isDisponivel()) {
-            Locacao novaLocacao = new Locacao(filme, this);
+        	LocalDate dataDevolucaoPrevista = LocalDate.now().plusDays(7);
+        	Locacao novaLocacao = new Locacao(filme, this, LocalDate.now(), dataDevolucaoPrevista);
+        	
             historicoLocacoes.add(novaLocacao);
             filme.setDisponivel(false); 											// Marca o filme como indisponível
-            System.out.println("Locação iniciada com sucesso: " + filme.getNome());
+            System.out.println("Locação iniciada com sucesso: " + filme.getNome() 
+            			    + "\nData da Devolução: " + dataDevolucaoPrevista);
             return true;
-            
         } else {
-            System.out.println("O filme não está disponível para locação.");
+        	System.out.println("O filme '" + filme.getNome() + "' não está disponível para locação.");
             return false;
         }
     }
