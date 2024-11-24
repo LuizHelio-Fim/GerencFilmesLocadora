@@ -154,11 +154,8 @@ public class ProgramaPrincipal {
 		String data = sc.nextLine();
 		System.out.println("Digite o preço do filme: ");
 		double preco = sc.nextDouble();
-		System.out.println("O filme está disponivel? (sim/nao)");
-		String disp = sc.nextLine();
-		boolean disponivel = disp.equalsIgnoreCase("sim");
 		
-		filme = new Filme(id, nome, genero, diretor, data, disponivel, preco);
+		filme = new Filme(id, nome, genero, diretor, data, true, preco);
 		if (t.adicionarFilme(filme)){ 	
 			System.out.println("Filme adicionado com sucesso.");
 		} else {

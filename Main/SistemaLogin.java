@@ -6,7 +6,7 @@ import Filmes.Locadora;
 import Pessoas.*;
 
 public class SistemaLogin {
-    private ArrayList<Pessoa> usuarios = new ArrayList<>();
+
     private Scanner sc = new Scanner(System.in);
 
     public void registrarUsuario(Locadora t) {				//Método para Registrar novos usuários, tanto ADM quanto Clientes

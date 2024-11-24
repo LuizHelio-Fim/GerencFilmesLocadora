@@ -117,7 +117,7 @@ public class Locadora {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("filmes.txt"))) {
             for (Filme filme : this.catalogoFilmes) {
                 String linha = filme.getId() + ";" + filme.getNome() + ";" + filme.getGenero() + ";" +
-                        filme.getDiretor() + ";" + filme.getDataLancamentoFormatada() + ";" + filme.isDisponivel();
+                        filme.getDiretor() + ";" + filme.getDataLancamentoFormatada() + ";" + filme.isDisponivel() + ";" + filme.getPreco();
                 bw.write(linha);
                 bw.newLine();
             }
