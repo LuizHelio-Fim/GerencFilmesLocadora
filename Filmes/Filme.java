@@ -103,6 +103,6 @@ public class Filme {
     @Override
     public String toString() {
         return "ID: " + id + "\nNome: " + nome + "\nGenero: " + genero + "\nDiretor: " + diretor
-                + "\nLançamento: " + dataLancamento.format(FORMATTER) + "\nPreço: " + preco  +"\nDisponivel: " + disponivel + "\n\n";
+                + "\nLançamento: " + dataLancamento.format(FORMATTER) + "\nDiaria: " + preco  +"\nDisponivel: " + disponivel + "\n\n";
     }
 }
