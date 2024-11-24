@@ -15,6 +15,8 @@ public class Recomendacao {
         this.recomendacoes = new ArrayList<>();
         this.catalogoFilmes = catalogoFilmes;
     }
+    
+    public static Locadora locadora = new Locadora();
 
     // Getters
     public Cliente getCliente() {
@@ -22,13 +24,19 @@ public class Recomendacao {
     }
 
     public ArrayList<Filme> getRecomendacoes() {
-        return recomendacoes;
+        return new ArrayList<>(recomendacoes); // Retorna uma cópia para evitar modificações externas
     }
 
+    // Gera recomendações com base no gênero do último filme locado
     public void gerarRecomendacoes() {
-    	ArrayList<Locacao> historicoLocacoes = cliente.getHistoricoLocacoes();
+        if (catalogoFilmes == null || catalogoFilmes.isEmpty()) {
+            System.out.println("O catálogo de filmes está vazio. Não é possível gerar recomendações.");
+            return;
+        }
 
-        if (historicoLocacoes.isEmpty()) {
+        ArrayList<Locacao> historicoLocacoes = locadora.getHistoricoLocacoes();
+
+        if (historicoLocacoes == null || historicoLocacoes.isEmpty()) {
             System.out.println("Alugue alguns filmes para gerarmos sua recomendação!");
             return;
         }
@@ -36,12 +44,7 @@ public class Recomendacao {
         Filme ultimoFilme = historicoLocacoes.get(historicoLocacoes.size() - 1).getFilme();
         String generoDoUltimoFilme = ultimoFilme.getGenero();
 
-        ArrayList<Filme> filmesDoGenero = new ArrayList<>();
-        for (Filme filme : catalogoFilmes) {
-            if (filme.getGenero().equals(generoDoUltimoFilme) && filme.isDisponivel()) {
-                filmesDoGenero.add(filme);
-            }
-        }
+        ArrayList<Filme> filmesDoGenero = filtrarFilmesPorGenero(generoDoUltimoFilme);
 
         // Verifica se existem filmes do mesmo gênero disponíveis
         if (filmesDoGenero.isEmpty()) {
@@ -49,14 +52,32 @@ public class Recomendacao {
             return;
         }
 
-        // Embaralha a lista de filmes do gênero
-        Collections.shuffle(filmesDoGenero);
+        // Gera até 3 recomendações embaralhadas
+        recomendacoes = gerarFilmesAleatorios(filmesDoGenero, 3);
 
-        // Limita a recomendação a 3 filmes
-        for (int i = 0; i < Math.min(3, filmesDoGenero.size()); i++) {
-            recomendacoes.add(filmesDoGenero.get(i));
+        // Exibe as recomendações
+        exibirRecomendacoes();
+    }
+
+    // Filtra filmes disponíveis do catálogo com base no gênero
+    private ArrayList<Filme> filtrarFilmesPorGenero(String genero) {
+        ArrayList<Filme> filmesFiltrados = new ArrayList<>();
+        for (Filme filme : catalogoFilmes) {
+            if (filme.getGenero().equalsIgnoreCase(genero) && filme.isDisponivel()) {
+                filmesFiltrados.add(filme);
+            }
         }
+        return filmesFiltrados;
+    }
 
+    // Gera uma lista de filmes aleatórios limitada a um número específico
+    private ArrayList<Filme> gerarFilmesAleatorios(ArrayList<Filme> filmes, int limite) {
+        Collections.shuffle(filmes); // Embaralha a lista
+        return new ArrayList<>(filmes.subList(0, Math.min(limite, filmes.size())));
+    }
+
+    // Exibe as recomendações ao cliente
+    private void exibirRecomendacoes() {
         if (recomendacoes.isEmpty()) {
             System.out.println("Não há recomendações disponíveis.");
         } else {
