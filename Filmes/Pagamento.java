@@ -37,9 +37,9 @@ public class Pagamento {
 		
 	}
 	
-	public boolean processarPagamento(double pagamento) {
+	public boolean processarPagamento(double valor) {
 		System.out.println("Processando...");
-		if (pagamento == calculaValorFinal()) {
+		if (valor == calculaValorFinal()) {
 			System.out.println("Pagamento confirmado!");
 			return true;
 		}

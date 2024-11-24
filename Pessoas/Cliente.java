@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import Filmes.Filme;
 import Filmes.Locacao;
+import Filmes.Pagamento;
 
 public class Cliente extends Pessoa {
     private ArrayList<Locacao> historicoLocacoes = new ArrayList<>();
@@ -53,4 +54,19 @@ public class Cliente extends Pessoa {
             }
         }
     }
+    
+    public Locacao devolverFilme(String nomeFilme, LocalDate dataDevolucao) {
+        for (Locacao locacao : historicoLocacoes) {
+            if (locacao.getFilme().getNome().equalsIgnoreCase(nomeFilme)) {
+                return locacao;
+            }
+        }
+        return null; 
+    }
+
+    public void removerLocacao(Locacao locacao) {
+    	locacao.getFilme().setDisponivel(true);
+        historicoLocacoes.remove(locacao);
+    }
+
 }

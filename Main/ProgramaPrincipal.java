@@ -1,5 +1,7 @@
 package Main;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Pessoas.*;
@@ -16,7 +18,7 @@ public class ProgramaPrincipal {
 	public static ArrayList<Pessoa> usuarios = new ArrayList<>();
 	public static Locadora locadora = new Locadora(catalogoFilmes, usuarios);
 	public static Cliente cliente = new Cliente();
-	
+	public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	public static void main(String[] args) {
 		locadora.iniciar();
@@ -46,6 +48,7 @@ public class ProgramaPrincipal {
 					+ "\n 3. Buscar Filme"
 					+ "\n 4. Visualizar Histórico de locações"
 					+ "\n 5. Recomendações"
+					+ "\n 6. Devolver filme"
 					+ "\n 0. Sair "
 					+ "\n > ");
 		opCliente = sc.next().charAt(0);
@@ -55,17 +58,19 @@ public class ProgramaPrincipal {
             System.out.println(locadora.listarFilmes());
              break;
          case '2':
-             // Lógica de aluguel
+        	 alugarFilme();
              break;
          case '3':
              buscarFilme();
              break;
          case '4':
-             // Mostrar histórico do cliente
+        	 histFilmes();
              break;
          case '5':
         	 recomendacao();
         	 break;
+         case '6':
+        	 devolucaoFilme();
          case '0':
              System.out.println("Saindo...");
              break;
@@ -195,10 +200,6 @@ public class ProgramaPrincipal {
 		
 	}
 	
-	public static void calcularMulta() {
-		
-	}
-	
 	//Opções cliente
 	public static void buscarFilme() {
 		System.out.println("Digite o nome do filme: ");
@@ -222,9 +223,10 @@ public class ProgramaPrincipal {
 		}
 		
 		System.out.println("Filmes Disponíveis para locação: ");
-		System.out.println(locadora.listarFilmes());
+		System.out.println(locadora.listarFilmesDisponiveis());
 		
 		System.out.println("\nDigite o nome do filme que deseja alugar: ");
+		sc.nextLine();
 	    String nome = sc.nextLine();
 	    
 	    Filme filmeSelecionado = null;
@@ -251,6 +253,38 @@ public class ProgramaPrincipal {
 	public static void histFilmes() {
 		cliente.visualizarHistorico();
 	}
+	
+	public static void devolucaoFilme() {
+	    System.out.println("Digite o nome do filme: ");
+	    sc.nextLine();	
+	    String nomeFilme = sc.nextLine();
+	    
+	    System.out.println("Digite a data de devolução (AAAA-MM-DD): ");
+	    String dataDevolucaoStr = sc.nextLine();
+	    LocalDate dataDevolucao = LocalDate.parse(dataDevolucaoStr);
+
+	    Locacao locacao = cliente.devolverFilme(nomeFilme, dataDevolucao);
+
+	    if (locacao == null) {
+	        System.out.println("[ERRO] Filme não encontrado na lista de locações.");
+	        return;
+	    }
+	    
+	    Pagamento pagamento = new Pagamento(locacao, dataDevolucao);
+	    System.out.println("Valor total a ser pago: " + pagamento.calculaValorFinal());
+	    
+	    System.out.println("Digite o valor do pagamento: ");
+	    double valorPagamento = sc.nextDouble();
+
+	    
+	    if (pagamento.processarPagamento(valorPagamento)) {
+	        cliente.removerLocacao(locacao);
+	        System.out.println("Filme devolvido com sucesso!");
+	    } else {
+	        System.out.println("Pagamento insuficiente. Tente novamente.");
+	    }
+	}
+
 	
 	public static void recomendacao() {
 		Recomendacao rec = new Recomendacao((Cliente) usuarioLogado, catalogoFilmes);

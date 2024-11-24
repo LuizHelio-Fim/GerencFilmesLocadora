@@ -210,10 +210,21 @@ public class Locadora {
 		}
 	}
 
-	public String listarFilmes() { 						//Retorna uma Lista completa com os filmes
+	public String listarFilmes() { 						//exibe todos os filmes da locadora
 	    StringBuilder lista = new StringBuilder();
 	    for (Filme filme : this.catalogoFilmes) {
 	        lista.append(filme.toString()).append("\n");
+	    }
+	    return lista.toString();
+	}
+	
+	public String listarFilmesDisponiveis() { 						//exibe apenas os filmes que não estão alugados
+	    StringBuilder lista = new StringBuilder();
+	    for (Filme filme : this.catalogoFilmes) {
+	    	if (filme.isDisponivel()) {
+	    		lista.append(filme.toString()).append("\n");
+	    	}
+	     
 	    }
 	    return lista.toString();
 	}

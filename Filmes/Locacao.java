@@ -62,10 +62,8 @@ public class Locacao {
 
     @Override
     public String toString() {
-        return "Filme: " + filme.getNome() + ", Cliente: " + cliente.getNome() + ", Data: " + dataLocacao;
+        return "Filme: " + filme.getNome() + ", Data: " + dataLocacao 
+        		+ " Data Devolução:" + dataDevolucaoPrevista;
     }
-    
-    public void finalizarLocacao() {
-    	this.filme.setDisponivel(true);
-    }
+
 }
