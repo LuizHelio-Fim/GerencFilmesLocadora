@@ -1,6 +1,8 @@
 package Filmes;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 import Pessoas.Cliente;
 
 public class Pagamento {
@@ -18,32 +20,36 @@ public class Pagamento {
 	}
 
 	public double calcularMultaPorAtraso ( ){
-		
-		int multa = (dataPagamento.getDayOfYear() -  this.locacao.getDataDevolucaoPrevista().getDayOfYear()) * 5;
-		return multa;
+		long diasAtraso = ChronoUnit.DAYS.between(locacao.getDataDevolucaoPrevista(), dataPagamento);
+		if (diasAtraso > 0) {
+			return diasAtraso * 5;			// R$5 de multa por dia
+		}
+		return 0;							// sem multa
 	}
 	
 	public double calculaValorFinal () {
+		long periodoLocado = ChronoUnit.DAYS.between(locacao.getDataLocacao(), dataPagamento);
 		
-		int periodoLocado = locacao.getDataDevolucaoPrevista().getDayOfYear() - locacao.getDataLocacao().getDayOfYear();
-		
-		double preco = periodoLocado * this.locacao.getFilme().getPreco();
-		
+		if (periodoLocado < 0) {
+			periodoLocado = 0;			// evitar valores negativos
+		}
+		double preco = periodoLocado * locacao.getFilme().getPreco();
 		double multa = calcularMultaPorAtraso();
 		
-		double precoFinal = preco + multa;
-		
-		return precoFinal;
-		
+		return preco + multa;
 	}
 	
 	public boolean processarPagamento(double valor) {
 		System.out.println("Processando...");
-		if (valor == calculaValorFinal()) {
+		double valorFinal = calculaValorFinal();
+		
+		if (Math.abs(valor - valorFinal) < 0.01) {
 			System.out.println("Pagamento confirmado!");
+			this.status = true;
 			return true;
 		}
 		System.out.println("[ERRO] - Pagamento negado!");
+		this.status = false;
 		return false;
 	}
 }
