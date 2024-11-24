@@ -45,7 +45,7 @@ public class SistemaLogin {
         }
     }
 
-    public Pessoa realizarLogin() {					//Método para realizar login 
+    public Pessoa realizarLogin(ArrayList<Pessoa> usuarios) {					//Método para realizar login 
         System.out.println("Digite seu email:");
         String email = sc.nextLine();
 

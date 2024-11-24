@@ -126,7 +126,7 @@ public class ProgramaPrincipal {
 				sistema.registrarUsuario(locadora);
 				break;
 			case '2':
-				usuarioLogado = sistema.realizarLogin();
+				usuarioLogado = sistema.realizarLogin(usuarios);
 				break;
 			case '0':
 				System.out.println("Encerrando o Sistema.");
