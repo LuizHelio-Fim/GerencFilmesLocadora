@@ -29,19 +29,15 @@ public class Recomendacao {
 
     // Gera recomendações com base no gênero do último filme locado
     public void gerarRecomendacoes() {
-        if (catalogoFilmes == null || catalogoFilmes.isEmpty()) {
-            System.out.println("O catálogo de filmes está vazio. Não é possível gerar recomendações.");
-            return;
-        }
-
-        ArrayList<Locacao> historicoLocacoes = locadora.getHistoricoLocacoes();
+    	ArrayList<Locacao> historicoLocacoes = cliente.getHistoricoLocacoes();
 
         if (historicoLocacoes == null || historicoLocacoes.isEmpty()) {
-            System.out.println("Alugue alguns filmes para gerarmos sua recomendação!");
+            System.out.println("O histórico de locações de " + cliente.getNome() + " está vazio. Alugue alguns filmes!");
             return;
         }
 
-        Filme ultimoFilme = historicoLocacoes.get(historicoLocacoes.size() - 1).getFilme();
+        Locacao ultimaLocacao = historicoLocacoes.get(historicoLocacoes.size() - 1);
+        Filme ultimoFilme = ultimaLocacao.getFilme();
         String generoDoUltimoFilme = ultimoFilme.getGenero();
 
         ArrayList<Filme> filmesDoGenero = filtrarFilmesPorGenero(generoDoUltimoFilme);
@@ -54,8 +50,6 @@ public class Recomendacao {
 
         // Gera até 3 recomendações embaralhadas
         recomendacoes = gerarFilmesAleatorios(filmesDoGenero, 3);
-
-        // Exibe as recomendações
         exibirRecomendacoes();
     }
 
