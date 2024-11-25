@@ -16,7 +16,8 @@ public class ProgramaPrincipal {
 	
 	public static ArrayList<Filme> catalogoFilmes = new ArrayList<>();
 	public static ArrayList<Pessoa> usuarios = new ArrayList<>();
-	public static Locadora locadora = new Locadora(catalogoFilmes, usuarios);
+	private static ArrayList<String> historicoLocacoes = new ArrayList<>();
+	public static Locadora locadora = new Locadora(catalogoFilmes, usuarios, historicoLocacoes);
 	public static Cliente cliente = new Cliente();
 	public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
@@ -42,6 +43,7 @@ public class ProgramaPrincipal {
 	
 	//MENUS
 	public static void menuCliente() {
+		
 		System.out.print("------ MENU ------"
 					+ "\n 1. Ver Filmes"
 					+ "\n 2. Alugar Filmes"
@@ -64,13 +66,14 @@ public class ProgramaPrincipal {
              buscarFilme();
              break;
          case '4':
-        	 histFilmes();
+        	 imprimirHistoricoFilmes(historicoLocacoes);
              break;
          case '5':
         	 recomendacao();
         	 break;
          case '6':
         	 devolucaoFilme();
+        	 break;
          case '0':
              System.out.println("Saindo...");
              usuarioLogado = null;
@@ -244,8 +247,17 @@ public class ProgramaPrincipal {
 		
 	}
 	
-	public static void histFilmes() {
-		cliente.visualizarHistorico();
+	public static void imprimirHistoricoFilmes(ArrayList<String> historicoLocacoes) {
+	    if (historicoLocacoes.isEmpty()) {
+	        System.out.println("Não há locações no histórico.");
+	    } else {
+	        System.out.println("Histórico de locações:");
+	        for (String locacao : historicoLocacoes) {
+	        	
+	        	if (locacao.contains(usuarioLogado.getEmail()))
+	            System.out.println(locacao);
+	        }
+	    }
 	}
 	
 	public static void devolucaoFilme() {

@@ -20,7 +20,6 @@ public class Locacao {
         this.cliente = cliente;
         this.dataLocacao = LocalDate.now();
         this.dataDevolucaoPrevista = dataDevolucaoPrevista;
-        filme.setDisponivel(false);
 
     }
 
@@ -65,20 +64,21 @@ public class Locacao {
         this.dataDevolucaoPrevista = dataDevolucaoPrevista;
     }
     
-    public void salvarLocacaoEmArquivo(String emailCliente, String nomeFilme, LocalDate dataLocacao) {
-	    String caminhoArquivo = "historicoLocacoes.txt"; 
-	    DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	    
-	    try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo, true))) {
-	        
-	        String linha = String.format("%s;%s;%s", emailCliente, nomeFilme, dataLocacao.format(formatoData));
-	        writer.write(linha);
-	        writer.newLine();
-	        System.out.println("Locação registrada no arquivo: " + caminhoArquivo);
-	    } catch (IOException e) {
-	        System.out.println("Erro ao salvar locação no arquivo: " + e.getMessage());
-	    }
-	}
+    public void salvarLocacaoEmArquivo(String emailCliente, String nomeFilme, LocalDate dataLocacao, LocalDate dataDevolucaoPrevista) {
+        String caminhoArquivo = "historicoLocacoes.txt"; 
+        DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo, true))) {
+            String linha = String.format("%s : %s : Data Locação: %s Data Devolução: %s", nomeFilme, emailCliente, dataLocacao.format(formatoData), dataDevolucaoPrevista.format(formatoData));
+            
+            writer.write(linha);
+            writer.newLine();
+
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar locação no arquivo: " + e.getMessage());
+        }
+    }
+
 
     @Override
     public String toString() {

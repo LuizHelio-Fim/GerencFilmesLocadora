@@ -40,7 +40,7 @@ public class Cliente extends Pessoa {
             System.out.println("Locação iniciada com sucesso: " + filme.getNome() 
             			    + "\nData da Devolução: " + dataDevolucaoPrevista);
             
-            novaLocacao.salvarLocacaoEmArquivo(cliente.getEmail(), filme.getNome(), novaLocacao.getDataLocacao());
+            novaLocacao.salvarLocacaoEmArquivo(filme.getNome(), cliente.getEmail(), novaLocacao.getDataLocacao(), novaLocacao.getDataDevolucaoPrevista());
             
             return true;
         } else {

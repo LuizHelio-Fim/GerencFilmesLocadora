@@ -1,19 +1,29 @@
 package Filmes;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import Pessoas.*;
+import Pessoas.Administrador;
+import Pessoas.Cliente;
+import Pessoas.Pessoa;
 
 public class Locadora {
     private ArrayList<Filme> catalogoFilmes = new ArrayList<>();
     private ArrayList<Pessoa> usuarios = new ArrayList<>();
-
+    private ArrayList<String> historicoLocacoes = new ArrayList<>();
     
     //Construtores
-    public Locadora(ArrayList<Filme> catalogoFilmes, ArrayList<Pessoa> usuarios) {
+    public Locadora(ArrayList<Filme> catalogoFilmes, ArrayList<Pessoa> usuarios, ArrayList<String> historicoLocacoes) {
 		this.catalogoFilmes = catalogoFilmes;
 		this.usuarios = usuarios;
+		this.historicoLocacoes = historicoLocacoes;
 	}
     
     public Locadora() {
@@ -156,8 +166,9 @@ public class Locadora {
     public void iniciar() {
     	carregarDadosFilme();
     	carregarDadosUsuarios();
+    	carregarHistoricoLocacoes();
     }
-
+    
     public void finalizar() {
         salvarDadosFilme();
         salvarDadosUsuarios();
@@ -252,14 +263,42 @@ public class Locadora {
 		return lista.toString();
 	}
 
-	public Filme buscarFilme(String nome) { 					// Busca um filme pelo nome no catálogo
-	    for (Filme filme : this.catalogoFilmes) {				// Usando um loop for-each para maior clareza
-	        if (filme.getNome().equalsIgnoreCase(nome)) {		// Ignora diferenças entre maiúsculas e minúsculas
-	            return filme; 									// Retorna o objeto Filme correspondente
+	public Filme buscarFilme(String nome) { 					
+	    for (Filme filme : this.catalogoFilmes) {				
+	        if (filme.getNome().equalsIgnoreCase(nome)) {		
+	            return filme; 									
 	        }
 	    }
-	    return null; 											// Retorna null se o filme não for encontrado
+	    return null; 											
 	}
 
-	
+	public void carregarHistoricoLocacoes() { 
+	    File arquivoLocacoes = new File("historicoLocacoes.txt");
+	    
+	    historicoLocacoes.clear();
+
+	    if (!arquivoLocacoes.exists()) {
+	        try {
+	            if (arquivoLocacoes.createNewFile()) {
+	                System.out.println("Arquivo historicoLocacoes.txt criado.");
+	            }
+	        } catch (IOException e) {
+	            System.err.println("Erro ao criar o arquivo historicoLocacoes.txt: " + e.getMessage());
+	            return;
+	        }
+	    }
+	    
+	    try (BufferedReader br = new BufferedReader(new FileReader(arquivoLocacoes))) {
+	        String linha;
+	        while ((linha = br.readLine()) != null) {
+	            historicoLocacoes.add(linha);
+	        }
+	       
+	    } catch (IOException e) {
+	        System.err.println("Erro ao carregar os dados do histórico de locações: " + e.getMessage());
+	    }
+	}
+
+
+
 }
