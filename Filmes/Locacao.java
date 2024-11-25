@@ -64,12 +64,12 @@ public class Locacao {
         this.dataDevolucaoPrevista = dataDevolucaoPrevista;
     }
     
-    public void salvarLocacaoEmArquivo(String emailCliente, String nomeFilme, LocalDate dataLocacao, LocalDate dataDevolucaoPrevista) {
+    public void salvarLocacaoEmArquivo(String emailCliente, String nomeFilme, LocalDate dataLocacao) {
         String caminhoArquivo = "historicoLocacoes.txt"; 
         DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo, true))) {
-            String linha = String.format("%s : %s : Data Locação: %s Data Devolução: %s", nomeFilme, emailCliente, dataLocacao.format(formatoData), dataDevolucaoPrevista.format(formatoData));
+            String linha = String.format("%s : %s : Data Locação: %s", nomeFilme, emailCliente, dataLocacao.format(formatoData));
             
             writer.write(linha);
             writer.newLine();

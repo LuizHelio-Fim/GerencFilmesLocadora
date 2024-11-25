@@ -1,2 +1,4 @@
 1;Luiz;luizhelio.fim@outlook.com;123;rua 8;true
 2;Erick;ericklauretti@gmail.com;456;rua 0;false
+3;renan;renan@gmail.com;123;rua 2;true
+4;matos;matos@gmail.com;123;rua 3;false

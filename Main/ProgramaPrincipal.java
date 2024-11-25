@@ -261,6 +261,11 @@ public class ProgramaPrincipal {
 	}
 	
 	public static void devolucaoFilme() {
+		
+		System.out.println("Filmes a serem devolvidos:");
+		for (Locacao locacao : cliente.getHistoricoLocacoes()) {
+			System.out.println(locacao);
+		}
 	    System.out.println("Digite o nome do filme: ");
 	    sc.nextLine();	
 	    String nomeFilme = sc.nextLine();
