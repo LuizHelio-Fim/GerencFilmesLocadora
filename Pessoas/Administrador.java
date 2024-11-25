@@ -2,15 +2,12 @@ package Pessoas;
 
 import java.util.ArrayList;
 import Filmes.Filme;
-import Filmes.Locadora;
 
 public class Administrador extends Pessoa {
 
 	public Administrador(int id , String nome, String email, String senha, String endereco, boolean isAdmin) {
-		super(id , nome, email, senha, endereco, isAdmin);
+		super(id , nome, email, senha, endereco, true);
 	}
-	
-    public static Locadora locadora = new Locadora();
 	
 	public boolean removerUsuario(Pessoa user, ArrayList<Pessoa> usuarios) {
 		if (usuarios.remove(user)) {
@@ -56,7 +53,7 @@ public class Administrador extends Pessoa {
 	
 	public boolean verificarHistoricoCliente(Cliente cliente) {
 		if (cliente != null) {
-			cliente.visualizarHistorico(locadora);
+			cliente.visualizarHistorico();
 			return true;
 		} else {
 			System.out.println("Cliente inválido.");
