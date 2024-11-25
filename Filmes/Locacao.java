@@ -73,7 +73,7 @@ public class Locacao {
             
             writer.write(linha);
             writer.newLine();
-
+            writer.flush();
         } catch (IOException e) {
             System.out.println("Erro ao salvar locação no arquivo: " + e.getMessage());
         }
