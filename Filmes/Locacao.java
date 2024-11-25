@@ -1,6 +1,11 @@
 package Filmes;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import Pessoas.Cliente;
 
 public class Locacao {
@@ -59,6 +64,21 @@ public class Locacao {
     public void setDataDevolucaoPrevista(LocalDate dataDevolucaoPrevista) {
         this.dataDevolucaoPrevista = dataDevolucaoPrevista;
     }
+    
+    public void salvarLocacaoEmArquivo(String emailCliente, String nomeFilme, LocalDate dataLocacao) {
+	    String caminhoArquivo = "historicoLocacoes.txt"; 
+	    DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    
+	    try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo, true))) {
+	        
+	        String linha = String.format("%s;%s;%s", emailCliente, nomeFilme, dataLocacao.format(formatoData));
+	        writer.write(linha);
+	        writer.newLine();
+	        System.out.println("Locação registrada no arquivo: " + caminhoArquivo);
+	    } catch (IOException e) {
+	        System.out.println("Erro ao salvar locação no arquivo: " + e.getMessage());
+	    }
+	}
 
     @Override
     public String toString() {

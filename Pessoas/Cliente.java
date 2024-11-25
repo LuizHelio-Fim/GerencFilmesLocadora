@@ -39,6 +39,9 @@ public class Cliente extends Pessoa {
             filme.setDisponivel(false); 											// Marca o filme como indisponível
             System.out.println("Locação iniciada com sucesso: " + filme.getNome() 
             			    + "\nData da Devolução: " + dataDevolucaoPrevista);
+            
+            novaLocacao.salvarLocacaoEmArquivo(this.getEmail(), filme.getNome(), novaLocacao.getDataLocacao());
+            
             return true;
         } else {
         	System.out.println("O filme '" + filme.getNome() + "' não está disponível para locação.");
