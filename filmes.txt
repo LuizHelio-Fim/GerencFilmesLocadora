@@ -1,3 +1,5 @@
 0;django;romance;tarantino;01/01/2010;true;10.0
 1;interestelar;scifi;nolan;01/01/2011;true;5.0
 2;city of god;drama;nolan;01/01/2012;true;15.0
+3;como treinar o seu dragao;aventura;eu;01/02/2010;true;5.0
+4;gigante de aço;aventura;huge jackman;01/03/2025;true;10.0

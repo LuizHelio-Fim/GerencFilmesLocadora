@@ -9,11 +9,13 @@ public class Recomendacao {
     private Cliente cliente;
     private ArrayList<Filme> recomendacoes;
     private ArrayList<Filme> catalogoFilmes;
-
-    public Recomendacao(Cliente cliente, ArrayList<Filme> catalogoFilmes) {
+    private ArrayList<Locacao> filmesReservado;
+    
+    public Recomendacao(Cliente cliente, ArrayList<Filme> catalogoFilmes, ArrayList<Locacao> filmesReservado) {
         this.cliente = cliente;
         this.recomendacoes = new ArrayList<>();
         this.catalogoFilmes = catalogoFilmes;
+        this.filmesReservado = filmesReservado;
     }
     
     public static Locadora locadora = new Locadora();
@@ -29,14 +31,14 @@ public class Recomendacao {
 
     // Gera recomendações com base no gênero do último filme locado
     public void gerarRecomendacoes() {
-    	ArrayList<Locacao> historicoLocacoes = cliente.getHistoricoLocacoes();
-
-        if (historicoLocacoes == null || historicoLocacoes.isEmpty()) {
+    	
+    	
+        if (filmesReservado == null || filmesReservado.isEmpty()) {
             System.out.println("O histórico de locações de " + cliente.getNome() + " está vazio. Alugue alguns filmes!");
             return;
         }
 
-        Locacao ultimaLocacao = historicoLocacoes.get(historicoLocacoes.size() - 1);
+        Locacao ultimaLocacao = filmesReservado.get(filmesReservado.size() - 1);
         Filme ultimoFilme = ultimaLocacao.getFilme();
         String generoDoUltimoFilme = ultimoFilme.getGenero();
 

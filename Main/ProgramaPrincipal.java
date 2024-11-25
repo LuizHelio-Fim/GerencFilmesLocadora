@@ -297,7 +297,7 @@ public class ProgramaPrincipal {
 	}
 
 	public static void recomendacao() {
-		Recomendacao rec = new Recomendacao((Cliente) usuarioLogado, catalogoFilmes);
+		Recomendacao rec = new Recomendacao((Cliente) usuarioLogado, catalogoFilmes, cliente.getFilmesReservado());
 		rec.gerarRecomendacoes();
 	}
 }

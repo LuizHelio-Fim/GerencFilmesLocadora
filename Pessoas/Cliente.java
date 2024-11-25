@@ -39,7 +39,7 @@ public class Cliente extends Pessoa {
         	Locacao novaLocacao = new Locacao(filme, this, LocalDate.now(), dataDevolucaoPrevista);
         	
             if (novaLocacao != null) {
-            	filmesReservado.add(novaLocacao);
+            	this.filmesReservado.add(novaLocacao);
             }
             filme.setDisponivel(false); 											// Marca o filme como indisponível
             System.out.println("Locação iniciada com sucesso: " + filme.getNome() 
