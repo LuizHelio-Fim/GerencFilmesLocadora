@@ -51,7 +51,7 @@ public class SistemaLogin {
 
         System.out.println("Digite sua senha:");
         String senha = sc.nextLine();
-
+        
         for (Pessoa usuario : usuarios) {
             if (usuario.getEmail().equals(email) && usuario.verificarSenha(senha)) {
                 System.out.println("Login realizado com sucesso! Bem-vindo(a), " + usuario.getNome() + ".");
