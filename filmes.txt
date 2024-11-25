@@ -1,5 +1,50 @@
-0;django;romance;tarantino;01/01/2010;true;10.0
-1;interestelar;scifi;nolan;01/01/2011;true;5.0
-2;city of god;drama;nolan;01/01/2012;true;15.0
-3;como treinar o seu dragao;aventura;eu;01/02/2010;true;5.0
-4;gigante de aço;aventura;huge jackman;01/03/2025;true;10.0
+1;Interestellar;sci-fi;Christopher Nolan;06/11/2014;true;3.0
+2;Matrix;sci-fi;Lana e Lilly Wachowski;21/05/1999;true;3.0
+3;Duna;sci-fi;Denis Villeneuve;21/10/2021;true;4.0
+4;O Poderoso Chefão;drama;Francis Ford Coppola;24/03/1972;true;2.5
+5;Senhor dos Anéis: A Sociedade do Anel;fantasy;Peter Jackson;19/12/2001;true;3.5
+6;Vingadores: Ultimato;action;Anthony e Joe Russo;26/04/2019;true;4.0
+7;Titanic;romance;James Cameron;19/12/1997;true;3.0
+8;Coringa;drama;Todd Phillips;04/10/2019;true;4.0
+9;Parasita;thriller;Bong Joon-ho;30/05/2019;true;4.5
+10;O Grande Hotel Budapeste;comedy;Wes Anderson;06/03/2014;true;3.0
+11;A Origem;sci-fi;Christopher Nolan;16/07/2010;true;3.5
+12;Pulp Fiction;crime;Quentin Tarantino;14/10/1994;true;2.5
+13;A Viagem de Chihiro;animation;Hayao Miyazaki;20/07/2001;true;3.5
+14;Gladiador;historical;Ridley Scott;05/05/2000;true;3.0
+15;Forrest Gump;drama;Robert Zemeckis;06/07/1994;true;2.5
+16;O Rei Leão;animation;Rob Minkoff e Roger Allers;24/06/1994;true;3.0
+17;Mad Max: Estrada da Fúria;action;George Miller;15/05/2015;true;4.0
+18;Harry Potter e a Pedra Filosofal;fantasy;Chris Columbus;16/11/2001;true;3.5
+19;Homem-Aranha no Aranhaverso;animation;Bob Persichetti, Peter Ramsey e Rodney Rothman;14/12/2018;true;4.0
+20;O Pianista;drama;Roman Polanski;25/09/2002;true;3.0
+21;Avatar;sci-fi;James Cameron;18/12/2009;true;3.5
+22;Gravidade;sci-fi;Alfonso Cuarón;04/10/2013;true;3.5
+23;Star Wars: Uma Nova Esperança;sci-fi;George Lucas;25/05/1977;true;3.5
+24;Blade Runner 2049;sci-fi;Denis Villeneuve;06/10/2017;true;4.0
+25;O Cavaleiro das Trevas;action;Christopher Nolan;18/07/2008;true;4.5
+26;Deadpool;action;Tim Miller;12/02/2016;true;3.5
+27;Logan;action;James Mangold;03/03/2017;true;4.0
+28;Piratas do Caribe: A Maldição do Pérola Negra;fantasy;Gore Verbinski;09/07/2003;true;3.5
+29;Shrek;animation;Andrew Adamson e Vicky Jenson;18/05/2001;true;3.5
+30;Procurando Nemo;animation;Andrew Stanton;30/05/2003;true;3.5
+31;Toy Story;animation;John Lasseter;22/11/1995;true;3.5
+32;O Castelo Animado;animation;Hayao Miyazaki;20/11/2004;true;3.5
+33;Ratatouille;animation;Brad Bird;29/06/2007;true;3.5
+34;Clube da Luta;drama;David Fincher;15/10/1999;true;3.0
+35;A Vida é Bela;drama;Roberto Benigni;20/12/1997;true;3.5
+36;O Lobo de Wall Street;drama;Martin Scorsese;25/12/2013;true;3.5
+37;A Lista de Schindler;historical;Steven Spielberg;04/02/1994;true;4.5
+38;Coração Valente;historical;Mel Gibson;24/05/1995;true;4.0
+39;1917;historical;Sam Mendes;10/01/2020;true;4.0
+40;As Crônicas de Nárnia: O Leão, a Feiticeira e o Guarda-Roupa;fantasy;Andrew Adamson;09/12/2005;true;3.5
+41;It: A Coisa;thriller;Andy Muschietti;08/09/2017;true;3.5
+42;Corra!;thriller;Jordan Peele;24/02/2017;true;4.0
+43;Um Lugar Silencioso;thriller;John Krasinski;06/04/2018;true;3.5
+44;Django Livre;crime;Quentin Tarantino;25/12/2012;true;3.5
+45;Bastardos Inglórios;crime;Quentin Tarantino;21/08/2009;true;3.5
+46;Os Infiltrados;crime;Martin Scorsese;06/10/2006;true;3.5
+47;Os Vingadores;action;Joss Whedon;04/05/2012;true;3.5
+48;Homem de Ferro;action;Jon Favreau;02/05/2008;true;3.5
+49;Capitão América: Guerra Civil;action;Anthony e Joe Russo;06/05/2016;true;3.5
+50;O Estranho Mundo de Jack;animation;Henry Selick;29/10/1993;true;3.5
