@@ -1,15 +1,13 @@
 package Filmes;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import Pessoas.Pessoa;
-import Pessoas.Cliente;
+
+import Pessoas.*;
 
 public class Locadora {
     private ArrayList<Filme> catalogoFilmes = new ArrayList<>();
     private ArrayList<Pessoa> usuarios = new ArrayList<>();
-    private ArrayList<Locacao> historicoLocacoes = new ArrayList<>();
 
     
     //Construtores
@@ -37,39 +35,8 @@ public class Locadora {
 	public void setUsuarios(ArrayList<Pessoa> usuarios) {
 		this.usuarios = usuarios;
 	}
-	
-	public ArrayList<Locacao> getHistoricoLocacoes() {
-		return historicoLocacoes;
-	}
 
-	public void setHistoricoLocacoes(ArrayList<Locacao> historicoLocacoes) {
-		this.historicoLocacoes = historicoLocacoes;
-	}
-	
-	// Métodos de gerenciamento de locações
-    public void adicionarLocacao(Locacao locacao) {
-        if (locacao != null) {
-            historicoLocacoes.add(locacao);
-        }
-    }
-
-    public void removerLocacao(Locacao locacao) {
-        if (locacao != null) {
-            historicoLocacoes.remove(locacao);
-        }
-    }
-
-    public ArrayList<Locacao> getHistoricoLocacoesCliente(Cliente cliente) {
-        ArrayList<Locacao> historicoCliente = new ArrayList<>();
-        for (Locacao locacao : historicoLocacoes) {
-            if (locacao.getCliente().equals(cliente)) {
-                historicoCliente.add(locacao);
-            }
-        }
-        return historicoCliente;
-    }
-
-	// Métodos de carregamento de dados
+	// Métodos de carregamento
     public boolean carregarDadosFilme() {
     	File arquivoFilme = new File("filmes.txt");
     	
@@ -126,14 +93,20 @@ public class Locadora {
             String linha;
             while ((linha = br.readLine()) != null) {
                 String[] dados = linha.split(";");
-                Pessoa usuario = new Pessoa(
-                        Integer.parseInt(dados[0]),
-                        dados[1],
-                        dados[2],
-                        dados[3],
-                        dados[4],
-                        Boolean.parseBoolean(dados[5])
-                );
+                
+                int id = Integer.parseInt(dados[0]);
+                String nome = dados[1];
+                String email = dados[2];
+                String senha = dados[3];
+                String endereco = dados[4];
+                boolean isAdmin = Boolean.parseBoolean(dados[5]);
+
+                Pessoa usuario;
+                if (isAdmin) {
+                    usuario = new Administrador(id, nome, email, senha, endereco, true);
+                } else {
+                    usuario = new Cliente(id, nome, email, senha, endereco, false);
+                }
                 this.usuarios.add(usuario);
             }
             return true;
@@ -145,48 +118,8 @@ public class Locadora {
         	return false;
         }
     }
-    
-    public boolean carregarHistLocacao() {
-        File arquivoHist = new File("historico.txt");
-        if (!arquivoHist.exists()) {
-            try {
-                if (arquivoHist.createNewFile()) {
-                    System.out.println("Arquivo historico.txt foi criado.");
-                }
-            } catch (IOException e) {
-                System.err.println("Erro ao criar o arquivo historico.txt: " + e.getMessage());
-                return false;
-            }
-        }
 
-        try (BufferedReader br = new BufferedReader(new FileReader("historico.txt"))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
-                String[] dados = linha.split(";");
-                Filme filme = buscarFilme(dados[0]);
-                Cliente cliente = (Cliente) usuarios.stream()
-                        .filter(u -> u instanceof Cliente && u.getNome().equalsIgnoreCase(dados[1]))
-                        .findFirst().orElse(null);
-
-                if (filme != null && cliente != null) {
-                    LocalDate dataLocacao = LocalDate.parse(dados[2]);
-                    LocalDate dataDevolucao = LocalDate.parse(dados[3]);
-
-                    Locacao locacao = new Locacao(filme, cliente, dataLocacao, dataDevolucao);
-                    adicionarLocacao(locacao);
-                }
-            }
-            return true;
-        } catch (IOException e) {
-            System.err.println("Erro ao carregar o histórico de locações: " + e.getMessage());
-            return false;
-        } catch (Exception e) {
-            System.err.println("Erro ao processar os dados do histórico: " + e.getMessage());
-            return false;
-        }
-    }
-
-    // Métodos de salvamento dados
+    // Métodos de salvamento
     public boolean salvarDadosFilme() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("filmes.txt"))) {
             for (Filme filme : this.catalogoFilmes) {
@@ -218,35 +151,16 @@ public class Locadora {
         }
     }
     
-    public boolean salvarDadosHistLocacao() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("historico.txt"))) {
-            for (Locacao locacao : historicoLocacoes) {
-                String linha = locacao.getFilme().getNome() + ";" +
-                               locacao.getCliente().getNome() + ";" +
-                               locacao.getDataLocacao() + ";" +
-                               locacao.getDataDevolucaoPrevista();
-                bw.write(linha);
-                bw.newLine();
-            }
-            return true;
-        } catch (IOException e) {
-            System.err.println("Erro ao salvar o histórico de locações: " + e.getMessage());
-            return false;
-        }
-    }
-    
     
     //métodos simplificados para o ProgramaPrincipal
     public void iniciar() {
     	carregarDadosFilme();
     	carregarDadosUsuarios();
-    	carregarHistLocacao();
     }
 
     public void finalizar() {
         salvarDadosFilme();
         salvarDadosUsuarios();
-        salvarDadosHistLocacao();
     }
 	
     public boolean adicionarFilme(Filme filme) { //Adicionar um filme ao catálogo
@@ -311,11 +225,11 @@ public class Locadora {
 	    return lista.toString();
 	}
 	
-	public String listarFilmesDisponiveis() { 			//exibe apenas os filmes que não estão alugados
+	public String listarFilmesDisponiveis() { 						//exibe apenas os filmes que não estão alugados
 	    StringBuilder lista = new StringBuilder();
 	    for (Filme filme : this.catalogoFilmes) {
 	    	if (filme.isDisponivel()) {
-	    		lista.append("- " + filme.getNome() + ", Diaria: R$" + filme.getPreco()).append("\n");
+	    		lista.append("- " + filme.getNome() + ", diaria: " + filme.getPreco()).append("\n");
 	    	}
 	     
 	    }
@@ -333,7 +247,7 @@ public class Locadora {
 	public String listarNomesClientes() {
 		StringBuilder lista = new StringBuilder();
 		for (Pessoa cliente : this.usuarios) {
-			lista.append(cliente.getNome()).append("\n");
+			lista.append("- " + cliente.getNome()).append("\n");
 		}
 		return lista.toString();
 	}
@@ -346,4 +260,6 @@ public class Locadora {
 	    }
 	    return null; 											// Retorna null se o filme não for encontrado
 	}
+
+	
 }
