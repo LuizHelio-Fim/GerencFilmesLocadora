@@ -1,7 +1,7 @@
 
 # Sistema de Locadora de Filmes
 
-Este é um sistema de locadora de filmes implementado em Java. Ele permite o gerenciamento de filmes, locações e usuários, com funcionalidades diferenciadas para administradores e clientes. O sistema oferece opções de login, registro de usuários, aluguel e devolução de filmes, além de permitir o gerenciamento do catálogo de filmes e clientes.
+Este é um sistema de locadora de filmes implementado em Java, Feito como Projeto Final da matéria de Laborátorio de Programação II. Ele permite o gerenciamento de filmes, locações e usuários, com funcionalidades diferenciadas para administradores e clientes. O sistema oferece opções de login, registro de usuários, aluguel e devolução de filmes, além de permitir o gerenciamento do catálogo de filmes e clientes.
 
 ## Funcionalidades
 
